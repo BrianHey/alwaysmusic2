@@ -1,29 +1,20 @@
-const actualizar = async (id, nombre, curso, nivel, rut) => {
-	let SQLquery = {
-		text:
-			"UPDATE cursos SET nombre=$2, curso=$3, nivel=$4, rut = $5 WHERE id =$1",
-		values: [id, nombre, curso, nivel, rut],
-		name: "update-estudiante",
-	};
-	pool.connect(async (error_conexion, client, release) => {
-		try {
-			if (error_conexion) {
-				console.log(error_conexion.code);
-				console.log(error_conexion);
-			} else {
-				const result = await client.query(SQLquery);
-				console.log("Cantidad de registros afectados ", result.rowCount);
-				console.log(result.rows);
-			}
-		} catch (error) {
-			console.log(error.code);
-			console.log(error);
-			console.log("no se pudo actualizar el registro");
-		} finally {
-			release();
-			pool.end();
-		}
-	});
+const actualizar = async (nombre, curso, nivel, rut, client) => {
+  let SQLquery = {
+    text:
+      "UPDATE estudiantes SET nombre=$1, curso=$2, nivel=$3, rut = $4 WHERE rut =$4 RETURNING *",
+    values: [nombre, curso, nivel, rut],
+    name: "update-estudiante",
+  };
+
+  try {
+    const result = await client.query(SQLquery);
+    console.log("Cantidad de registros afectados ", result.rowCount);
+    console.log(result.rows[0]);
+  } catch (error) {
+    console.log(error.code);
+    console.log(error);
+    console.log("no se pudo actualizar el registro");
+  }
 };
 
 module.exports = actualizar;
