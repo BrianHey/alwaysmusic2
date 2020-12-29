@@ -52,4 +52,4 @@ pool.connect(async (error_conexion, client, release) => {
   }
   release();
   pool.end();
-});
+})
