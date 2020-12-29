@@ -7,7 +7,8 @@ const eliminarEstudiante = async (rut) => {
     }
     try {
         const res = await pool.query(consulta)
-        res.rowCount > 1 ? console.log("Estudiante eliminado") : console.log("El rut ingresado no existe, vuelve a intentar")
+        return res.rowsCount
+        // res.rowCount > 1 ? console.log("Estudiante eliminado") : console.log("El rut ingresado no existe, vuelve a intentar")
     } catch (error) {
         console.log(error.code)
     }
