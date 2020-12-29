@@ -1,4 +1,5 @@
 const { Pool }  = require("pg")
+const  ingresarEstudiante = require("./nuevoUsuario")
 
 const config = {
 
